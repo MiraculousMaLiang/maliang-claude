@@ -39,6 +39,14 @@ function formatDate(date) {
 }
 
 /**
+ * 格式化时间（仅时分）
+ * 功能：将Date对象格式化为时间字符串
+ */
+function formatTimeOnly(date) {
+  return formatTime(date, 'HH:mm');
+}
+
+/**
  * 数字补零
  * 功能：给小于10的数字前面补0
  */
@@ -146,6 +154,7 @@ function debounce(fn, delay = 500) {
 module.exports = {
   formatTime,
   formatDate,
+  formatTimeOnly,
   padZero,
   calculateDueDate,
   calculateWeeks,

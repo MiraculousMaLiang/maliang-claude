@@ -5,8 +5,10 @@
 
 const user = require('./user');
 const auth = require('./auth');
+const pregnancy = require('./pregnancy');
 
 module.exports = {
   user,
-  auth
+  auth,
+  pregnancy
 }
