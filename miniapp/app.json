@@ -5,7 +5,8 @@
     "pages/login/login",
     "pages/profile/profile",
     "pages/pregnancy/info",
-    "pages/pregnancy/fetal-movement"
+    "pages/pregnancy/fetal-movement",
+    "pages/health/vital-signs"
   ],
   "window": {
     "backgroundTextStyle": "light",
