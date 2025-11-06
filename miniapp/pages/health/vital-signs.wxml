@@ -1,0 +1,119 @@
+<!--
+  体征监测页面
+  功能：记录和查看体征数据
+-->
+<view class="container">
+  <!-- 最新记录卡片 -->
+  <view class="latest-card" wx:if="{{latestRecord}}">
+    <view class="card-title">最新体征</view>
+    <view class="record-date">{{latestRecord.recordDate}}</view>
+
+    <view class="vital-grid">
+      <view class="vital-item" wx:if="{{latestRecord.systolicPressure}}">
+        <text class="vital-label">血压</text>
+        <text class="vital-value">{{latestRecord.systolicPressure}}/{{latestRecord.diastolicPressure}}</text>
+        <van-tag type="{{latestRecord.bloodPressureStatus === '正常' ? 'success' : 'warning'}}" size="small">
+          {{latestRecord.bloodPressureStatus}}
+        </van-tag>
+      </view>
+
+      <view class="vital-item" wx:if="{{latestRecord.weight}}">
+        <text class="vital-label">体重</text>
+        <text class="vital-value">{{latestRecord.weight}}kg</text>
+        <text class="vital-change" wx:if="{{latestRecord.weightChange}}">
+          {{latestRecord.weightChange > 0 ? '+' : ''}}{{latestRecord.weightChange}}kg
+        </text>
+      </view>
+
+      <view class="vital-item" wx:if="{{latestRecord.temperature}}">
+        <text class="vital-label">体温</text>
+        <text class="vital-value">{{latestRecord.temperature}}℃</text>
+        <van-tag type="{{latestRecord.temperatureStatus === '正常' ? 'success' : 'warning'}}" size="small">
+          {{latestRecord.temperatureStatus}}
+        </van-tag>
+      </view>
+
+      <view class="vital-item" wx:if="{{latestRecord.heartRate}}">
+        <text class="vital-label">心率</text>
+        <text class="vital-value">{{latestRecord.heartRate}}次/分</text>
+        <van-tag type="{{latestRecord.heartRateStatus === '正常' ? 'success' : 'warning'}}" size="small">
+          {{latestRecord.heartRateStatus}}
+        </van-tag>
+      </view>
+
+      <view class="vital-item" wx:if="{{latestRecord.bloodSugar}}">
+        <text class="vital-label">血糖</text>
+        <text class="vital-value">{{latestRecord.bloodSugar}}mmol/L</text>
+        <van-tag type="{{latestRecord.bloodSugarStatus === '正常' ? 'success' : 'warning'}}" size="small">
+          {{latestRecord.bloodSugarStatus}}
+        </van-tag>
+      </view>
+    </view>
+  </view>
+
+  <van-empty wx:else description="暂无体征记录" />
+
+  <!-- 历史记录 -->
+  <van-tabs active="{{activeTab}}" bind:change="onTabChange" color="#FF9999" custom-class="mt-20">
+    <van-tab title="最近7天">
+      <view class="records-list">
+        <view wx:if="{{recentRecords.length > 0}}">
+          <view class="record-item" wx:for="{{recentRecords}}" wx:key="id">
+            <view class="record-date">{{item.recordDate}}</view>
+            <view class="vital-grid">
+              <view class="vital-item-simple" wx:if="{{item.systolicPressure}}">
+                血压: {{item.systolicPressure}}/{{item.diastolicPressure}} ({{item.bloodPressureStatus}})
+              </view>
+              <view class="vital-item-simple" wx:if="{{item.weight}}">
+                体重: {{item.weight}}kg
+              </view>
+              <view class="vital-item-simple" wx:if="{{item.temperature}}">
+                体温: {{item.temperature}}℃ ({{item.temperatureStatus}})
+              </view>
+            </view>
+          </view>
+        </view>
+        <van-empty wx:else description="暂无记录" />
+      </view>
+    </van-tab>
+  </van-tabs>
+
+  <!-- 添加按钮 -->
+  <view class="add-button">
+    <van-button type="primary" round color="#FF9999" icon="plus" bindtap="showAddPopup" block>
+      添加体征记录
+    </van-button>
+  </view>
+
+  <!-- 添加弹窗 -->
+  <van-popup show="{{showAddPopup}}" position="bottom" custom-style="height: 70%;" bind:close="closeAddPopup">
+    <view class="popup-content">
+      <view class="popup-header">
+        <text class="popup-title">添加体征记录</text>
+        <van-icon name="cross" bindtap="closeAddPopup" />
+      </view>
+
+      <view class="form-content">
+        <van-cell-group>
+          <van-cell title="记录日期" value="{{formData.recordDate || '请选择'}}" is-link bindtap="showDatePicker" />
+          <van-field value="{{formData.systolicPressure}}" type="number" label="收缩压(mmHg)" placeholder="请输入收缩压" border="{{false}}" bind:change="onSystolicChange" />
+          <van-field value="{{formData.diastolicPressure}}" type="number" label="舒张压(mmHg)" placeholder="请输入舒张压" border="{{false}}" bind:change="onDiastolicChange" />
+          <van-field value="{{formData.weight}}" type="digit" label="体重(kg)" placeholder="请输入体重" border="{{false}}" bind:change="onWeightChange" />
+          <van-field value="{{formData.temperature}}" type="digit" label="体温(℃)" placeholder="请输入体温" border="{{false}}" bind:change="onTemperatureChange" />
+          <van-field value="{{formData.heartRate}}" type="number" label="心率(次/分)" placeholder="请输入心率" border="{{false}}" bind:change="onHeartRateChange" />
+          <van-field value="{{formData.bloodSugar}}" type="digit" label="血糖(mmol/L)" placeholder="请输入血糖" border="{{false}}" bind:change="onBloodSugarChange" />
+          <van-field value="{{formData.notes}}" type="textarea" label="备注" placeholder="请输入备注（可选）" autosize border="{{false}}" bind:change="onNotesChange" />
+        </van-cell-group>
+      </view>
+
+      <view class="popup-footer">
+        <van-button block color="#FF9999" bindtap="saveVitalSigns">保存</van-button>
+      </view>
+    </view>
+  </van-popup>
+
+  <!-- 日期选择器 -->
+  <van-popup show="{{showDatePickerPopup}}" position="bottom" bind:close="closeDatePicker">
+    <van-datetime-picker type="date" value="{{currentDate}}" min-date="{{minDate}}" max-date="{{maxDate}}" bind:confirm="onDateConfirm" bind:cancel="closeDatePicker" />
+  </van-popup>
+</view>

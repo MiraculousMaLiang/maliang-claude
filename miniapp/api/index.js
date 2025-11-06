@@ -5,8 +5,12 @@
 
 const user = require('./user');
 const auth = require('./auth');
+const pregnancy = require('./pregnancy');
+const health = require('./health');
 
 module.exports = {
   user,
-  auth
+  auth,
+  pregnancy,
+  health
 }

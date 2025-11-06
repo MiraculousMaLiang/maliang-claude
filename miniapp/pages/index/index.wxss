@@ -60,63 +60,10 @@
 }
 
 /* 功能菜单 */
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20rpx;
+.menu-section {
   margin-bottom: 20rpx;
 }
 
-.menu-item {
-  background-color: #fff;
-  border-radius: 16rpx;
-  padding: 30rpx 20rpx;
-  text-align: center;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
-}
-
-.menu-icon {
-  font-size: 48rpx;
-  margin-bottom: 10rpx;
-}
-
-.menu-text {
-  font-size: 24rpx;
-  color: #666;
-}
-
-/* 今日提醒 */
-.reminder-list {
-  margin-top: 10rpx;
-}
-
-.reminder-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20rpx 0;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.reminder-item:last-child {
-  border-bottom: none;
-}
-
-.reminder-text {
-  font-size: 28rpx;
-  color: #333;
-  flex: 1;
-}
-
-.reminder-time {
-  font-size: 24rpx;
-  color: #999;
-  margin-left: 20rpx;
-}
-
-.empty-text {
-  text-align: center;
-  color: #999;
-  font-size: 28rpx;
-  padding: 40rpx 0;
+.menu-section van-grid {
+  background-color: transparent;
 }

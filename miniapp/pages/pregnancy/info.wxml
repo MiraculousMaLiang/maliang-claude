@@ -1,0 +1,182 @@
+<!--
+  孕期信息页面
+  功能：显示和管理孕期信息
+-->
+<view class="container">
+  <!-- 有孕期信息时显示 -->
+  <view wx:if="{{pregnancyInfo}}">
+    <!-- 孕期概览卡片 -->
+    <view class="pregnancy-overview">
+      <view class="overview-header">
+        <view class="week-info">
+          <text class="week-number">{{pregnancyInfo.currentWeek}}</text>
+          <text class="week-text">周</text>
+          <text class="day-text">+{{pregnancyInfo.currentDay % 7}}天</text>
+        </view>
+        <view class="status-tag">{{pregnancyInfo.pregnancyStatusText}}</view>
+      </view>
+
+      <view class="overview-stats">
+        <view class="stat-item">
+          <text class="stat-value">{{pregnancyInfo.currentDay}}</text>
+          <text class="stat-label">已怀孕天数</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{pregnancyInfo.daysToDelivery}}</text>
+          <text class="stat-label">距离预产期</text>
+        </view>
+      </view>
+
+      <view class="overview-dates">
+        <view class="date-item">
+          <text class="date-label">末次月经</text>
+          <text class="date-value">{{pregnancyInfo.lastPeriodDate}}</text>
+        </view>
+        <view class="date-item">
+          <text class="date-label">预产期</text>
+          <text class="date-value">{{pregnancyInfo.dueDate}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 详细信息 -->
+    <van-cell-group title="详细信息" custom-class="mt-20">
+      <van-cell title="妊娠类型" value="{{pregnancyInfo.pregnancyTypeText}}" />
+      <van-cell title="风险等级" value="{{pregnancyInfo.riskLevelText}}" />
+      <van-cell
+        wx:if="{{pregnancyInfo.notes}}"
+        title="备注"
+        value="{{pregnancyInfo.notes}}"
+      />
+    </van-cell-group>
+
+    <!-- 操作按钮 -->
+    <view class="button-group">
+      <van-button
+        type="primary"
+        block
+        color="#FF9999"
+        bindtap="editPregnancyInfo"
+      >
+        编辑信息
+      </van-button>
+    </view>
+  </view>
+
+  <!-- 无孕期信息时显示 -->
+  <view wx:else>
+    <van-empty description="暂无孕期信息">
+      <van-button
+        type="primary"
+        color="#FF9999"
+        bindtap="addPregnancyInfo"
+      >
+        添加孕期信息
+      </van-button>
+    </van-empty>
+  </view>
+
+  <!-- 添加/编辑弹窗 -->
+  <van-popup
+    show="{{showEditPopup}}"
+    position="bottom"
+    custom-style="height: 70%;"
+    bind:close="closeEditPopup"
+  >
+    <view class="popup-content">
+      <view class="popup-header">
+        <text class="popup-title">{{editMode === 'add' ? '添加' : '编辑'}}孕期信息</text>
+        <van-icon name="cross" bindtap="closeEditPopup" />
+      </view>
+
+      <view class="form-content">
+        <van-cell-group>
+          <!-- 末次月经日期 -->
+          <van-cell
+            title="末次月经日期"
+            value="{{formData.lastPeriodDate || '请选择'}}"
+            is-link
+            bindtap="showDatePicker"
+          />
+
+          <!-- 妊娠类型 -->
+          <van-cell
+            title="妊娠类型"
+            value="{{pregnancyTypes[formData.pregnancyType - 1] || '请选择'}}"
+            is-link
+            bindtap="showPregnancyTypePicker"
+          />
+
+          <!-- 风险等级 -->
+          <van-cell
+            title="风险等级"
+            value="{{riskLevels[formData.riskLevel - 1] || '请选择'}}"
+            is-link
+            bindtap="showRiskLevelPicker"
+          />
+
+          <!-- 备注 -->
+          <van-field
+            value="{{formData.notes}}"
+            type="textarea"
+            placeholder="请输入备注信息"
+            autosize
+            border="{{false}}"
+            bind:change="onNotesChange"
+          />
+        </van-cell-group>
+      </view>
+
+      <view class="popup-footer">
+        <van-button block color="#FF9999" bindtap="savePregnancyInfo">
+          保存
+        </van-button>
+      </view>
+    </view>
+  </van-popup>
+
+  <!-- 日期选择器 -->
+  <van-popup
+    show="{{showDatePickerPopup}}"
+    position="bottom"
+    bind:close="closeDatePicker"
+  >
+    <van-datetime-picker
+      type="date"
+      value="{{currentDate}}"
+      min-date="{{minDate}}"
+      max-date="{{maxDate}}"
+      bind:confirm="onDateConfirm"
+      bind:cancel="closeDatePicker"
+    />
+  </van-popup>
+
+  <!-- 妊娠类型选择器 -->
+  <van-popup
+    show="{{showPregnancyTypePickerPopup}}"
+    position="bottom"
+    bind:close="closePregnancyTypePicker"
+  >
+    <van-picker
+      columns="{{pregnancyTypes}}"
+      bind:confirm="onPregnancyTypeConfirm"
+      bind:cancel="closePregnancyTypePicker"
+    />
+  </van-popup>
+
+  <!-- 风险等级选择器 -->
+  <van-popup
+    show="{{showRiskLevelPickerPopup}}"
+    position="bottom"
+    bind:close="closeRiskLevelPicker"
+  >
+    <van-picker
+      columns="{{riskLevels}}"
+      bind:confirm="onRiskLevelConfirm"
+      bind:cancel="closeRiskLevelPicker"
+    />
+  </van-popup>
+
+  <!-- 对话框 -->
+  <van-dialog id="van-dialog" />
+</view>

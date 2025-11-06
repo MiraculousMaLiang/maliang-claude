@@ -29,50 +29,31 @@
   </view>
 
   <!-- 功能菜单 -->
-  <view class="menu-grid">
-    <view class="menu-item" bindtap="navigateTo" data-url="/pages/checkup/checkup">
-      <view class="menu-icon">📋</view>
-      <view class="menu-text">产检记录</view>
-    </view>
-    <view class="menu-item" bindtap="navigateTo" data-url="/pages/vital-signs/vital-signs">
-      <view class="menu-icon">💗</view>
-      <view class="menu-text">体征记录</view>
-    </view>
-    <view class="menu-item" bindtap="navigateTo" data-url="/pages/diet/diet">
-      <view class="menu-icon">🍎</view>
-      <view class="menu-text">膳食记录</view>
-    </view>
-    <view class="menu-item" bindtap="navigateTo" data-url="/pages/exercise/exercise">
-      <view class="menu-icon">🏃</view>
-      <view class="menu-text">运动记录</view>
-    </view>
-    <view class="menu-item" bindtap="navigateTo" data-url="/pages/knowledge/knowledge">
-      <view class="menu-icon">📚</view>
-      <view class="menu-text">知识科普</view>
-    </view>
-    <view class="menu-item" bindtap="navigateTo" data-url="/pages/community/community">
-      <view class="menu-icon">💬</view>
-      <view class="menu-text">社区交流</view>
-    </view>
-    <view class="menu-item" bindtap="navigateTo" data-url="/pages/emergency/emergency">
-      <view class="menu-icon">🚨</view>
-      <view class="menu-text">紧急服务</view>
-    </view>
-    <view class="menu-item" bindtap="navigateTo" data-url="/pages/reminder/reminder">
-      <view class="menu-icon">⏰</view>
-      <view class="menu-text">提醒设置</view>
-    </view>
+  <view class="menu-section">
+    <van-grid column-num="4" border="{{false}}" gutter="20">
+      <van-grid-item icon="description" text="产检记录" bindtap="navigateTo" data-url="/pages/checkup/checkup" />
+      <van-grid-item icon="like-o" text="体征记录" bindtap="navigateTo" data-url="/pages/vital-signs/vital-signs" />
+      <van-grid-item icon="tosend" text="膳食记录" bindtap="navigateTo" data-url="/pages/diet/diet" />
+      <van-grid-item icon="idcard" text="运动记录" bindtap="navigateTo" data-url="/pages/exercise/exercise" />
+      <van-grid-item icon="bookmark-o" text="知识科普" bindtap="navigateTo" data-url="/pages/knowledge/knowledge" />
+      <van-grid-item icon="chat-o" text="社区交流" bindtap="navigateTo" data-url="/pages/community/community" />
+      <van-grid-item icon="warning-o" text="紧急服务" bindtap="navigateTo" data-url="/pages/emergency/emergency" />
+      <van-grid-item icon="clock-o" text="提醒设置" bindtap="navigateTo" data-url="/pages/reminder/reminder" />
+    </van-grid>
   </view>
 
   <!-- 今日提醒 -->
   <view class="card">
     <view class="card-title">今日提醒</view>
-    <view class="reminder-list" wx:if="{{reminders.length > 0}}">
-      <view class="reminder-item" wx:for="{{reminders}}" wx:key="index">
-        <view class="reminder-text">{{item.text}}</view>
-        <view class="reminder-time">{{item.time}}</view>
-      </view>
-    </view>
-    <view class="empty-text" wx:else>暂无提醒</view>
+    <van-cell-group wx:if="{{reminders.length > 0}}">
+      <van-cell
+        wx:for="{{reminders}}"
+        wx:key="index"
+        title="{{item.text}}"
+        value="{{item.time}}"
+        icon="clock-o"
+      />
+    </van-cell-group>
+    <van-empty wx:else description="暂无提醒" />
   </view>
 </view>

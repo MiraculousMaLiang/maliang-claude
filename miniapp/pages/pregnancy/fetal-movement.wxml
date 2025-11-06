@@ -1,0 +1,308 @@
+<!--
+  胎动记录页面
+  功能：记录和查看胎动情况
+-->
+<view class="container">
+  <!-- 顶部统计卡片 -->
+  <view class="statistics-card">
+    <view class="card-header">
+      <text class="date-text">{{selectedDate}}</text>
+      <van-button
+        type="primary"
+        size="small"
+        color="#FF9999"
+        bindtap="showCalendar"
+      >
+        选择日期
+      </van-button>
+    </view>
+
+    <view class="stats-content" wx:if="{{statistics}}">
+      <view class="stat-item">
+        <text class="stat-value">{{statistics.movementCount || 0}}</text>
+        <text class="stat-label">胎动次数</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-value">{{statistics.duration || 0}}</text>
+        <text class="stat-label">总时长(分钟)</text>
+      </view>
+    </view>
+
+    <view class="stats-content" wx:else>
+      <view class="empty-stats">
+        <text>暂无胎动记录</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Tab切换 -->
+  <van-tabs active="{{activeTab}}" bind:change="onTabChange" color="#FF9999">
+    <van-tab title="今日记录">
+      <!-- 今日记录列表 -->
+      <view class="records-list">
+        <view wx:if="{{todayRecords.length > 0}}">
+          <view
+            class="record-item"
+            wx:for="{{todayRecords}}"
+            wx:key="id"
+          >
+            <view class="record-header">
+              <view class="time-info">
+                <van-icon name="clock-o" size="16px" color="#FF9999" />
+                <text class="time-text">{{item.recordTime}}</text>
+                <van-tag type="primary" color="#FF9999" plain>{{item.timePeriodText}}</van-tag>
+              </view>
+              <van-icon
+                name="delete-o"
+                size="18px"
+                color="#999"
+                bindtap="deleteRecord"
+                data-id="{{item.id}}"
+              />
+            </view>
+
+            <view class="record-content">
+              <view class="record-detail">
+                <text class="label">胎动次数：</text>
+                <text class="value">{{item.movementCount}}次</text>
+              </view>
+              <view class="record-detail">
+                <text class="label">持续时长：</text>
+                <text class="value">{{item.duration}}分钟</text>
+              </view>
+              <view class="record-detail">
+                <text class="label">胎动强度：</text>
+                <text class="value">{{item.strengthText}}</text>
+              </view>
+            </view>
+
+            <view class="record-notes" wx:if="{{item.notes}}">
+              <text class="notes-label">备注：</text>
+              <text class="notes-text">{{item.notes}}</text>
+            </view>
+          </view>
+        </view>
+
+        <van-empty wx:else description="今日暂无胎动记录" />
+      </view>
+    </van-tab>
+
+    <van-tab title="最近7天">
+      <!-- 最近7天记录 -->
+      <view class="records-list">
+        <view wx:if="{{recentRecords.length > 0}}">
+          <view
+            class="record-item"
+            wx:for="{{recentRecords}}"
+            wx:key="id"
+          >
+            <view class="record-header">
+              <view class="time-info">
+                <text class="date-text">{{item.recordDate}}</text>
+                <text class="time-text">{{item.recordTime}}</text>
+                <van-tag type="primary" color="#FF9999" plain>{{item.timePeriodText}}</van-tag>
+              </view>
+              <van-icon
+                name="delete-o"
+                size="18px"
+                color="#999"
+                bindtap="deleteRecord"
+                data-id="{{item.id}}"
+              />
+            </view>
+
+            <view class="record-content">
+              <view class="record-detail">
+                <text class="label">胎动次数：</text>
+                <text class="value">{{item.movementCount}}次</text>
+              </view>
+              <view class="record-detail">
+                <text class="label">持续时长：</text>
+                <text class="value">{{item.duration}}分钟</text>
+              </view>
+              <view class="record-detail">
+                <text class="label">胎动强度：</text>
+                <text class="value">{{item.strengthText}}</text>
+              </view>
+            </view>
+
+            <view class="record-notes" wx:if="{{item.notes}}">
+              <text class="notes-label">备注：</text>
+              <text class="notes-text">{{item.notes}}</text>
+            </view>
+          </view>
+        </view>
+
+        <van-empty wx:else description="最近7天暂无胎动记录" />
+      </view>
+    </van-tab>
+  </van-tabs>
+
+  <!-- 添加记录按钮 -->
+  <view class="add-button">
+    <van-button
+      type="primary"
+      round
+      color="#FF9999"
+      icon="plus"
+      bindtap="showAddPopup"
+      block
+    >
+      添加胎动记录
+    </van-button>
+  </view>
+
+  <!-- 添加记录弹窗 -->
+  <van-popup
+    show="{{showAddPopup}}"
+    position="bottom"
+    custom-style="height: 70%;"
+    bind:close="closeAddPopup"
+  >
+    <view class="popup-content">
+      <view class="popup-header">
+        <text class="popup-title">添加胎动记录</text>
+        <van-icon name="cross" bindtap="closeAddPopup" />
+      </view>
+
+      <view class="form-content">
+        <van-cell-group>
+          <!-- 记录日期 -->
+          <van-cell
+            title="记录日期"
+            value="{{formData.recordDate || '请选择'}}"
+            is-link
+            bindtap="showDatePicker"
+          />
+
+          <!-- 记录时间 -->
+          <van-cell
+            title="记录时间"
+            value="{{formData.recordTime || '请选择'}}"
+            is-link
+            bindtap="showTimePicker"
+          />
+
+          <!-- 时间段 -->
+          <van-cell
+            title="时间段"
+            value="{{timePeriods[formData.timePeriod - 1] || '请选择'}}"
+            is-link
+            bindtap="showTimePeriodPicker"
+          />
+
+          <!-- 胎动次数 -->
+          <van-field
+            value="{{formData.movementCount}}"
+            type="number"
+            label="胎动次数"
+            placeholder="请输入胎动次数"
+            border="{{false}}"
+            bind:change="onMovementCountChange"
+          />
+
+          <!-- 持续时长 -->
+          <van-field
+            value="{{formData.duration}}"
+            type="number"
+            label="持续时长(分钟)"
+            placeholder="请输入持续时长"
+            border="{{false}}"
+            bind:change="onDurationChange"
+          />
+
+          <!-- 胎动强度 -->
+          <van-cell
+            title="胎动强度"
+            value="{{strengths[formData.strength - 1] || '请选择'}}"
+            is-link
+            bindtap="showStrengthPicker"
+          />
+
+          <!-- 备注 -->
+          <van-field
+            value="{{formData.notes}}"
+            type="textarea"
+            label="备注"
+            placeholder="请输入备注信息（可选）"
+            autosize
+            border="{{false}}"
+            bind:change="onNotesChange"
+          />
+        </van-cell-group>
+      </view>
+
+      <view class="popup-footer">
+        <van-button block color="#FF9999" bindtap="saveFetalMovement">
+          保存
+        </van-button>
+      </view>
+    </view>
+  </van-popup>
+
+  <!-- 日历选择器 -->
+  <van-calendar
+    show="{{showCalendarPopup}}"
+    bind:confirm="onCalendarConfirm"
+    bind:close="closeCalendar"
+    max-date="{{maxDate}}"
+    min-date="{{minDate}}"
+  />
+
+  <!-- 日期选择器 -->
+  <van-popup
+    show="{{showDatePickerPopup}}"
+    position="bottom"
+    bind:close="closeDatePicker"
+  >
+    <van-datetime-picker
+      type="date"
+      value="{{currentDate}}"
+      min-date="{{minDate}}"
+      max-date="{{maxDate}}"
+      bind:confirm="onDateConfirm"
+      bind:cancel="closeDatePicker"
+    />
+  </van-popup>
+
+  <!-- 时间选择器 -->
+  <van-popup
+    show="{{showTimePickerPopup}}"
+    position="bottom"
+    bind:close="closeTimePicker"
+  >
+    <van-datetime-picker
+      type="time"
+      value="{{currentTime}}"
+      bind:confirm="onTimeConfirm"
+      bind:cancel="closeTimePicker"
+    />
+  </van-popup>
+
+  <!-- 时间段选择器 -->
+  <van-popup
+    show="{{showTimePeriodPickerPopup}}"
+    position="bottom"
+    bind:close="closeTimePeriodPicker"
+  >
+    <van-picker
+      columns="{{timePeriods}}"
+      bind:confirm="onTimePeriodConfirm"
+      bind:cancel="closeTimePeriodPicker"
+    />
+  </van-popup>
+
+  <!-- 胎动强度选择器 -->
+  <van-popup
+    show="{{showStrengthPickerPopup}}"
+    position="bottom"
+    bind:close="closeStrengthPicker"
+  >
+    <van-picker
+      columns="{{strengths}}"
+      bind:confirm="onStrengthConfirm"
+      bind:cancel="closeStrengthPicker"
+    />
+  </van-popup>
+</view>

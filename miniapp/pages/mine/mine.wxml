@@ -17,55 +17,32 @@
 
   <!-- 功能菜单 -->
   <view class="menu-list">
-    <view class="menu-group">
-      <view class="menu-item" bindtap="navigateTo" data-url="/pages/profile/profile">
-        <view class="menu-icon">👤</view>
-        <view class="menu-label">个人信息</view>
-        <view class="arrow-icon">›</view>
-      </view>
-      <view class="menu-item" bindtap="navigateTo" data-url="/pages/user-profile/user-profile">
-        <view class="menu-icon">📋</view>
-        <view class="menu-label">健康档案</view>
-        <view class="arrow-icon">›</view>
-      </view>
-      <view class="menu-item" bindtap="navigateTo" data-url="/pages/emergency-contact/emergency-contact">
-        <view class="menu-icon">📞</view>
-        <view class="menu-label">紧急联系人</view>
-        <view class="arrow-icon">›</view>
-      </view>
-    </view>
+    <van-cell-group>
+      <van-cell title="个人信息" icon="contact" is-link bindtap="navigateTo" data-url="/pages/profile/profile" />
+      <van-cell title="健康档案" icon="records" is-link bindtap="navigateTo" data-url="/pages/user-profile/user-profile" />
+      <van-cell title="紧急联系人" icon="phone-o" is-link bindtap="navigateTo" data-url="/pages/emergency-contact/emergency-contact" />
+    </van-cell-group>
 
-    <view class="menu-group">
-      <view class="menu-item" bindtap="navigateTo" data-url="/pages/pregnancy/pregnancy">
-        <view class="menu-icon">🤰</view>
-        <view class="menu-label">孕期信息</view>
-        <view class="arrow-icon">›</view>
-      </view>
-      <view class="menu-item" bindtap="navigateTo" data-url="/pages/reminder/reminder">
-        <view class="menu-icon">⏰</view>
-        <view class="menu-label">提醒设置</view>
-        <view class="arrow-icon">›</view>
-      </view>
-    </view>
+    <van-cell-group custom-class="mt-20">
+      <van-cell title="孕期信息" icon="friends-o" is-link bindtap="navigateTo" data-url="/pages/pregnancy/pregnancy" />
+      <van-cell title="提醒设置" icon="clock-o" is-link bindtap="navigateTo" data-url="/pages/reminder/reminder" />
+    </van-cell-group>
 
-    <view class="menu-group">
-      <view class="menu-item" bindtap="navigateTo" data-url="/pages/setting/setting">
-        <view class="menu-icon">⚙️</view>
-        <view class="menu-label">系统设置</view>
-        <view class="arrow-icon">›</view>
-      </view>
-      <view class="menu-item" bindtap="navigateTo" data-url="/pages/about/about">
-        <view class="menu-icon">ℹ️</view>
-        <view class="menu-label">关于我们</view>
-        <view class="arrow-icon">›</view>
-      </view>
-    </view>
+    <van-cell-group custom-class="mt-20">
+      <van-cell title="系统设置" icon="setting-o" is-link bindtap="navigateTo" data-url="/pages/setting/setting" />
+      <van-cell title="关于我们" icon="info-o" is-link bindtap="navigateTo" data-url="/pages/about/about" />
+    </van-cell-group>
   </view>
 
   <!-- 退出登录按钮 -->
   <view class="logout-section">
-    <button class="btn-secondary logout-btn" bindtap="logout">
+    <van-button
+      type="default"
+      block
+      round
+      bindtap="logout"
+    >
       退出登录
-    </button>
+    </van-button>
   </view>
 </view>
