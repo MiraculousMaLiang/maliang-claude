@@ -1,0 +1,19 @@
+{
+  "name": "maternal-health-miniapp",
+  "version": "1.0.0",
+  "description": "孕产妇全周期健康管理小程序",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "miniprogram",
+    "maternal-health",
+    "pregnancy"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@vant/weapp": "^1.11.6"
+  }
+}
