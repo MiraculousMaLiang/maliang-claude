@@ -1,0 +1,64 @@
+<!--
+  登录页面
+  功能：提供微信一键登录和手机号登录方式
+-->
+<view class="container">
+  <view class="login-box">
+    <!-- Logo和标题 -->
+    <view class="logo-section">
+      <view class="logo">🤰</view>
+      <view class="app-name">孕产妇健康管理</view>
+      <view class="app-slogan">全周期贴心守护</view>
+    </view>
+
+    <!-- 微信一键登录 -->
+    <view class="login-section">
+      <button class="btn-primary login-btn" bindtap="wxLogin">
+        微信一键登录
+      </button>
+
+      <view class="divider">
+        <view class="divider-line"></view>
+        <view class="divider-text">或</view>
+        <view class="divider-line"></view>
+      </view>
+
+      <!-- 手机号登录 -->
+      <view class="phone-login" wx:if="{{showPhoneLogin}}">
+        <input
+          class="input"
+          placeholder="请输入手机号"
+          type="number"
+          maxlength="11"
+          value="{{phone}}"
+          bindinput="onPhoneInput"
+        />
+        <input
+          class="input"
+          placeholder="请输入密码"
+          password="{{true}}"
+          value="{{password}}"
+          bindinput="onPasswordInput"
+        />
+        <button class="btn-secondary login-btn" bindtap="phoneLogin">
+          登录
+        </button>
+        <view class="link-text" bindtap="goToRegister">
+          还没有账号？立即注册
+        </view>
+      </view>
+
+      <view class="link-text" wx:else bindtap="showPhoneLoginForm">
+        使用手机号登录
+      </view>
+    </view>
+
+    <!-- 协议提示 -->
+    <view class="agreement">
+      <text>登录即表示同意</text>
+      <text class="link">《用户协议》</text>
+      <text>和</text>
+      <text class="link">《隐私政策》</text>
+    </view>
+  </view>
+</view>

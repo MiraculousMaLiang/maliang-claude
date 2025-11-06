@@ -1,0 +1,6 @@
+<view class="container">
+  <view class="text-center p-30">
+    <view class="text-bold">个人信息页面</view>
+    <view class="mt-20 text-secondary">功能开发中...</view>
+  </view>
+</view>
