@@ -1,0 +1,71 @@
+<!--
+  我的页面
+  功能：展示用户信息和系统设置入口
+-->
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card" bindtap="navigateTo" data-url="/pages/profile/profile">
+    <view class="user-avatar">
+      <image src="{{userInfo.avatar || '/assets/images/default-avatar.png'}}" mode="aspectFill"></image>
+    </view>
+    <view class="user-info">
+      <view class="user-name">{{userInfo.nickname || '未设置昵称'}}</view>
+      <view class="user-phone">{{userInfo.phone || ''}}</view>
+    </view>
+    <view class="arrow-icon">›</view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-list">
+    <view class="menu-group">
+      <view class="menu-item" bindtap="navigateTo" data-url="/pages/profile/profile">
+        <view class="menu-icon">👤</view>
+        <view class="menu-label">个人信息</view>
+        <view class="arrow-icon">›</view>
+      </view>
+      <view class="menu-item" bindtap="navigateTo" data-url="/pages/user-profile/user-profile">
+        <view class="menu-icon">📋</view>
+        <view class="menu-label">健康档案</view>
+        <view class="arrow-icon">›</view>
+      </view>
+      <view class="menu-item" bindtap="navigateTo" data-url="/pages/emergency-contact/emergency-contact">
+        <view class="menu-icon">📞</view>
+        <view class="menu-label">紧急联系人</view>
+        <view class="arrow-icon">›</view>
+      </view>
+    </view>
+
+    <view class="menu-group">
+      <view class="menu-item" bindtap="navigateTo" data-url="/pages/pregnancy/pregnancy">
+        <view class="menu-icon">🤰</view>
+        <view class="menu-label">孕期信息</view>
+        <view class="arrow-icon">›</view>
+      </view>
+      <view class="menu-item" bindtap="navigateTo" data-url="/pages/reminder/reminder">
+        <view class="menu-icon">⏰</view>
+        <view class="menu-label">提醒设置</view>
+        <view class="arrow-icon">›</view>
+      </view>
+    </view>
+
+    <view class="menu-group">
+      <view class="menu-item" bindtap="navigateTo" data-url="/pages/setting/setting">
+        <view class="menu-icon">⚙️</view>
+        <view class="menu-label">系统设置</view>
+        <view class="arrow-icon">›</view>
+      </view>
+      <view class="menu-item" bindtap="navigateTo" data-url="/pages/about/about">
+        <view class="menu-icon">ℹ️</view>
+        <view class="menu-label">关于我们</view>
+        <view class="arrow-icon">›</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 退出登录按钮 -->
+  <view class="logout-section">
+    <button class="btn-secondary logout-btn" bindtap="logout">
+      退出登录
+    </button>
+  </view>
+</view>

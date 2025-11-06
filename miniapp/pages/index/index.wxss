@@ -1,0 +1,122 @@
+/* 首页样式 */
+
+.container {
+  padding: 20rpx;
+  background-color: #F8F8F8;
+}
+
+/* 顶部欢迎信息 */
+.header {
+  background: linear-gradient(135deg, #FF9999 0%, #FFCCCC 100%);
+  border-radius: 20rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 20rpx;
+  color: #fff;
+}
+
+.welcome-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.tips-text {
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+/* 孕期信息卡片 */
+.pregnancy-card {
+  margin-bottom: 20rpx;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  color: #333;
+}
+
+.pregnancy-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-item {
+  text-align: center;
+  flex: 1;
+}
+
+.info-item .label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+}
+
+.info-item .value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 功能菜单 */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.menu-item {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx 20rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.menu-icon {
+  font-size: 48rpx;
+  margin-bottom: 10rpx;
+}
+
+.menu-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 今日提醒 */
+.reminder-list {
+  margin-top: 10rpx;
+}
+
+.reminder-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.reminder-item:last-child {
+  border-bottom: none;
+}
+
+.reminder-text {
+  font-size: 28rpx;
+  color: #333;
+  flex: 1;
+}
+
+.reminder-time {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 20rpx;
+}
+
+.empty-text {
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+  padding: 40rpx 0;
+}
