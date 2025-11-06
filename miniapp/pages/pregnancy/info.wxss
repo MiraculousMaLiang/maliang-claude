@@ -4,18 +4,17 @@
 
 .container {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #f7f8fa;
   padding: 20rpx;
 }
 
-/* 孕期概览卡片 */
+/* 孕期概览卡片 - 白色主题 */
 .pregnancy-overview {
-  background: linear-gradient(135deg, #FF9999 0%, #FFB6B6 100%);
-  border-radius: 20rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
   padding: 40rpx;
-  color: white;
   margin-bottom: 20rpx;
-  box-shadow: 0 4rpx 12rpx rgba(255, 153, 153, 0.3);
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.06);
 }
 
 .overview-header {
@@ -23,6 +22,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30rpx;
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
 }
 
 .week-info {
@@ -31,59 +32,70 @@
 }
 
 .week-number {
-  font-size: 80rpx;
+  font-size: 72rpx;
   font-weight: bold;
   line-height: 1;
+  color: #FF6B9D;
 }
 
 .week-text {
   font-size: 32rpx;
   margin-left: 10rpx;
+  color: #333;
+  font-weight: 500;
 }
 
 .day-text {
   font-size: 24rpx;
   margin-left: 10rpx;
-  opacity: 0.9;
+  color: #999;
 }
 
 .status-tag {
-  background-color: rgba(255, 255, 255, 0.3);
-  padding: 10rpx 20rpx;
-  border-radius: 30rpx;
+  background: linear-gradient(135deg, #FFE5EF 0%, #FFF0F5 100%);
+  color: #FF6B9D;
+  padding: 12rpx 24rpx;
+  border-radius: 24rpx;
   font-size: 24rpx;
+  font-weight: 500;
 }
 
 .overview-stats {
   display: flex;
   justify-content: space-around;
   margin-bottom: 30rpx;
-  padding: 30rpx 0;
-  border-top: 1rpx solid rgba(255, 255, 255, 0.3);
-  border-bottom: 1rpx solid rgba(255, 255, 255, 0.3);
+  padding: 24rpx 0;
 }
 
 .stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
+}
+
+.stat-item + .stat-item {
+  border-left: 1rpx solid #f0f0f0;
 }
 
 .stat-value {
   font-size: 48rpx;
   font-weight: bold;
   line-height: 1.2;
+  color: #FF6B9D;
 }
 
 .stat-label {
   font-size: 24rpx;
-  margin-top: 10rpx;
-  opacity: 0.9;
+  margin-top: 8rpx;
+  color: #999;
 }
 
 .overview-dates {
   display: flex;
   justify-content: space-around;
+  padding-top: 24rpx;
+  border-top: 1rpx solid #f0f0f0;
 }
 
 .date-item {
@@ -94,13 +106,14 @@
 
 .date-label {
   font-size: 24rpx;
-  opacity: 0.9;
-  margin-bottom: 10rpx;
+  color: #999;
+  margin-bottom: 8rpx;
 }
 
 .date-value {
   font-size: 28rpx;
-  font-weight: bold;
+  font-weight: 500;
+  color: #333;
 }
 
 /* 操作按钮 */
@@ -114,6 +127,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  background-color: #ffffff;
 }
 
 .popup-header {
@@ -121,23 +135,25 @@
   justify-content: space-between;
   align-items: center;
   padding: 30rpx;
-  border-bottom: 1rpx solid #eee;
+  border-bottom: 1rpx solid #f0f0f0;
 }
 
 .popup-title {
   font-size: 32rpx;
   font-weight: bold;
+  color: #333;
 }
 
 .form-content {
   flex: 1;
   overflow-y: auto;
   padding: 20rpx 0;
+  background-color: #f7f8fa;
 }
 
 .popup-footer {
   padding: 20rpx;
-  border-top: 1rpx solid #eee;
+  border-top: 1rpx solid #f0f0f0;
   background-color: white;
 }
 
