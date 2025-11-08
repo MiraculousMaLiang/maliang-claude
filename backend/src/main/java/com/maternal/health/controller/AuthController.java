@@ -59,7 +59,7 @@ public class AuthController {
      * 功能：用户退出登录，清除登录状态
      */
     @PostMapping("/logout")
-    public Result<Void> logout() {
+    public Result<String> logout() {
         authService.logout();
         return Result.success("退出登录成功");
     }
