@@ -1,7 +1,7 @@
 # Pull Request 信息
 
 ## 标题
-feat: 完善微信登录功能和UI优化
+feat: 完善微信登录功能、UI优化和API重构
 
 ## 分支信息
 - **源分支**: `claude/maternal-health-mini-app-011CUqohQWy4FQeR54aN7UC9`
@@ -9,7 +9,7 @@ feat: 完善微信登录功能和UI优化
 
 ## 描述
 
-本次PR包含以下两个重要更新：
+本次PR包含以下三个重要更新：
 
 ### 1. 完善微信小程序登录功能 (670d0de)
 
@@ -65,25 +65,65 @@ feat: 完善微信登录功能和UI优化
 - 柔和的阴影效果
 - 清晰的视觉层次
 
+### 3. 重构API返回结果集为R类 (9a3ddd8)
+
+**后端重构：**
+- 🔨 新增 `R.java` 统一API返回结果类，使用String类型的code字段
+- 🔨 新增 `CodeEnums.java` 定义状态码常量（SUCCESS_CODE="200", ERROR_CODE="-1"等）
+- 🗑️ 移除旧的 `Result.java` 类（87行代码）
+- ✅ 更新所有10个Controller的返回类型从 `Result<T>` 改为 `R<T>`
+- ✅ 更新 `GlobalExceptionHandler` 使用R类和String类型错误码
+
+**API方法变更：**
+- `Result.success()` → `R.ok()`
+- `Result.error()` → `R.error()`
+- code字段类型：`Integer` → `String` ("200", "401"等)
+
+**前端适配：**
+- 🔧 更新 `request.js` 使用宽松相等(==)代替严格相等(===)
+- ✅ 兼容String和Integer两种类型的code值
+- ✅ 保持向后兼容性
+
+**技术要点：**
+- R类强制code和message非空校验
+- 支持多种重载方法（ok(data)、ok(message, data)、error(code, message)等）
+- 统一异常处理返回格式
+- 完善的类型安全和序列化支持
+
 ## 文件变更统计
 
 **新增文件：**
 - `WECHAT_LOGIN_README.md` - 微信登录配置文档
 - `backend/src/main/java/com/maternal/health/config/WechatMiniAppConfig.java` - 微信配置类
 - `backend/src/main/java/com/maternal/health/utils/WechatUtil.java` - 微信API工具类
+- `backend/src/main/java/com/maternal/health/result/R.java` - 统一API返回结果类
+- `backend/src/main/java/com/maternal/health/enums/CodeEnums.java` - 状态码常量定义
+
+**删除文件：**
+- `backend/src/main/java/com/maternal/health/common/Result.java` - 旧的返回结果类
 
 **修改文件：**
 - `backend/src/main/resources/application.yml` - 添加微信配置
 - `backend/src/main/java/com/maternal/health/service/impl/AuthServiceImpl.java` - 完善微信登录逻辑
 - `backend/src/main/java/com/maternal/health/dto/WxLoginDTO.java` - 添加gender字段
-- `miniapp/utils/request.js` - 修复DELETE方法导出
+- `backend/src/main/java/com/maternal/health/common/GlobalExceptionHandler.java` - 使用R类
+- `backend/src/main/java/com/maternal/health/controller/AuthController.java` - Result→R重构
+- `backend/src/main/java/com/maternal/health/controller/UserController.java` - Result→R重构
+- `backend/src/main/java/com/maternal/health/controller/UserProfileController.java` - Result→R重构
+- `backend/src/main/java/com/maternal/health/controller/EmergencyContactController.java` - Result→R重构
+- `backend/src/main/java/com/maternal/health/controller/PregnancyInfoController.java` - Result→R重构
+- `backend/src/main/java/com/maternal/health/controller/FetalMovementController.java` - Result→R重构
+- `backend/src/main/java/com/maternal/health/controller/VitalSignsController.java` - Result→R重构
+- `backend/src/main/java/com/maternal/health/controller/SymptomRecordController.java` - Result→R重构
+- `backend/src/main/java/com/maternal/health/controller/TestController.java` - Result→R重构
+- `miniapp/utils/request.js` - 修复DELETE方法导出、适配String类型code
 - `miniapp/pages/pregnancy/info.wxss` - 白色主题样式优化
 - `miniapp/pages/health/vital-signs.wxss` - 白色主题样式优化
 
 **变更统计：**
-- 9 个文件被修改
-- 新增约 454 行代码
-- 删除约 39 行代码
+- 21 个文件被修改/新增/删除
+- 新增约 715 行代码
+- 删除约 230 行代码
 
 ## 测试说明
 
@@ -96,17 +136,26 @@ feat: 完善微信登录功能和UI优化
 - 所有页面已改为白色主题
 - 视觉效果更清爽、现代
 
+**API重构：**
+- ⚠️ 需要测试所有API接口
+- ⚠️ 前端已适配String类型code，兼容性已保证
+- ⚠️ 所有Controller和异常处理已更新
+
 ## 影响范围
 
 - ✅ 后端：微信登录API功能完善
+- ✅ 后端：API返回结果统一重构为R类
 - ✅ 前端：UI主题优化为白色
+- ✅ 前端：API请求适配String类型code
 - ✅ 文档：新增微信登录配置说明
 
 ## 注意事项
 
 1. **配置要求**：部署前必须配置微信小程序的AppID和AppSecret
-2. **向后兼容**：所有更改向后兼容，不影响现有功能
-3. **安全性**：AppSecret请妥善保管，不要提交到公开仓库
+2. **API变更**：所有接口返回的code字段从Integer改为String类型（"200", "401"等）
+3. **兼容性**：前端已使用宽松相等(==)保证兼容性，建议测试所有API接口
+4. **向后兼容**：除code类型变更外，其他更改向后兼容
+5. **安全性**：AppSecret请妥善保管，不要提交到公开仓库
 
 ## Checklist
 
@@ -123,8 +172,12 @@ feat: 完善微信登录功能和UI优化
 1. 检查 `WECHAT_LOGIN_README.md` 配置文档
 2. 确认微信登录流程的完整性
 3. 查看UI白色主题的视觉效果
+4. 重点审查 `R.java` 和 `CodeEnums.java` 的实现
+5. 验证API重构的完整性（所有Controller已更新）
+6. 检查前端request.js的兼容性处理
 
 **合并后需要做的：**
 1. 在 `application.yml` 中配置实际的微信AppID和AppSecret
 2. 重启后端服务
 3. 测试微信登录功能
+4. 全面测试所有API接口，确认code字段类型变更不影响功能
