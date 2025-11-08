@@ -1,6 +1,6 @@
 package com.maternal.health.controller;
 
-import com.maternal.health.common.Result;
+import com.maternal.health.result.R;
 import com.maternal.health.dto.AddPregnancyInfoDTO;
 import com.maternal.health.service.PregnancyInfoService;
 import com.maternal.health.vo.PregnancyInfoVO;
@@ -26,9 +26,9 @@ public class PregnancyInfoController {
      * 功能：获取当前登录用户的最新孕期信息
      */
     @GetMapping("/info")
-    public Result<PregnancyInfoVO> getCurrentPregnancyInfo() {
+    public R<PregnancyInfoVO> getCurrentPregnancyInfo() {
         PregnancyInfoVO pregnancyInfo = pregnancyInfoService.getCurrentPregnancyInfo();
-        return Result.success(pregnancyInfo);
+        return R.ok(pregnancyInfo);
     }
 
     /**
@@ -36,9 +36,9 @@ public class PregnancyInfoController {
      * 功能：如果ID存在则更新，不存在则新增
      */
     @PostMapping("/info")
-    public Result<Void> saveOrUpdatePregnancyInfo(@Validated @RequestBody AddPregnancyInfoDTO addPregnancyInfoDTO) {
+    public R<Void> saveOrUpdatePregnancyInfo(@Validated @RequestBody AddPregnancyInfoDTO addPregnancyInfoDTO) {
         pregnancyInfoService.saveOrUpdatePregnancyInfo(addPregnancyInfoDTO);
-        return Result.success();
+        return R.ok();
     }
 
     /**
@@ -46,9 +46,9 @@ public class PregnancyInfoController {
      * 功能：根据末次月经日期更新预产期、孕周等计算字段
      */
     @PutMapping("/info/{pregnancyId}/calculate")
-    public Result<Void> updateCalculatedFields(@PathVariable Long pregnancyId) {
+    public R<Void> updateCalculatedFields(@PathVariable Long pregnancyId) {
         pregnancyInfoService.updateCalculatedFields(pregnancyId);
-        return Result.success();
+        return R.ok();
     }
 
     /**
@@ -56,8 +56,8 @@ public class PregnancyInfoController {
      * 功能：逻辑删除指定的孕期信息
      */
     @DeleteMapping("/info/{pregnancyId}")
-    public Result<Void> deletePregnancyInfo(@PathVariable Long pregnancyId) {
+    public R<Void> deletePregnancyInfo(@PathVariable Long pregnancyId) {
         pregnancyInfoService.deletePregnancyInfo(pregnancyId);
-        return Result.success();
+        return R.ok();
     }
 }

@@ -1,6 +1,6 @@
 package com.maternal.health.controller;
 
-import com.maternal.health.common.Result;
+import com.maternal.health.result.R;
 import com.maternal.health.dto.UpdateUserInfoDTO;
 import com.maternal.health.service.UserService;
 import com.maternal.health.vo.UserInfoVO;
@@ -24,9 +24,9 @@ public class UserController {
      * 功能：获取当前登录用户的详细信息
      */
     @GetMapping("/info")
-    public Result<UserInfoVO> getUserInfo() {
+    public R<UserInfoVO> getUserInfo() {
         UserInfoVO userInfo = userService.getCurrentUserInfo();
-        return Result.success(userInfo);
+        return R.ok(userInfo);
     }
 
     /**
@@ -34,8 +34,8 @@ public class UserController {
      * 功能：更新当前登录用户的基本信息
      */
     @PutMapping("/info")
-    public Result<Void> updateUserInfo(@Validated @RequestBody UpdateUserInfoDTO updateUserInfoDTO) {
+    public R<Void> updateUserInfo(@Validated @RequestBody UpdateUserInfoDTO updateUserInfoDTO) {
         userService.updateUserInfo(updateUserInfoDTO);
-        return Result.success("用户信息更新成功");
+        return R.ok("用户信息更新成功");
     }
 }

@@ -1,6 +1,6 @@
 package com.maternal.health.controller;
 
-import com.maternal.health.common.Result;
+import com.maternal.health.result.R;
 import com.maternal.health.dto.UpdateUserProfileDTO;
 import com.maternal.health.service.UserProfileService;
 import com.maternal.health.vo.UserProfileVO;
@@ -24,9 +24,9 @@ public class UserProfileController {
      * 功能：获取当前登录用户的健康档案信息
      */
     @GetMapping
-    public Result<UserProfileVO> getUserProfile() {
+    public R<UserProfileVO> getUserProfile() {
         UserProfileVO userProfile = userProfileService.getCurrentUserProfile();
-        return Result.success(userProfile);
+        return R.ok(userProfile);
     }
 
     /**
@@ -34,8 +34,8 @@ public class UserProfileController {
      * 功能：如果档案不存在则创建，存在则更新
      */
     @PutMapping
-    public Result<Void> saveOrUpdateUserProfile(@Validated @RequestBody UpdateUserProfileDTO updateUserProfileDTO) {
+    public R<Void> saveOrUpdateUserProfile(@Validated @RequestBody UpdateUserProfileDTO updateUserProfileDTO) {
         userProfileService.saveOrUpdateUserProfile(updateUserProfileDTO);
-        return Result.success("用户档案保存成功");
+        return R.ok("用户档案保存成功");
     }
 }

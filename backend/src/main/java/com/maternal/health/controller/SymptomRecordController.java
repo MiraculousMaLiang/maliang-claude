@@ -1,6 +1,6 @@
 package com.maternal.health.controller;
 
-import com.maternal.health.common.Result;
+import com.maternal.health.result.R;
 import com.maternal.health.dto.AddSymptomRecordDTO;
 import com.maternal.health.service.SymptomRecordService;
 import com.maternal.health.vo.SymptomRecordVO;
@@ -30,9 +30,9 @@ public class SymptomRecordController {
      * 功能：添加一条症状记录
      */
     @PostMapping
-    public Result<Void> addSymptomRecord(@Validated @RequestBody AddSymptomRecordDTO addSymptomRecordDTO) {
+    public R<Void> addSymptomRecord(@Validated @RequestBody AddSymptomRecordDTO addSymptomRecordDTO) {
         symptomRecordService.addSymptomRecord(addSymptomRecordDTO);
-        return Result.success();
+        return R.ok();
     }
 
     /**
@@ -40,9 +40,9 @@ public class SymptomRecordController {
      * 功能：更新已有的症状记录
      */
     @PutMapping
-    public Result<Void> updateSymptomRecord(@Validated @RequestBody AddSymptomRecordDTO addSymptomRecordDTO) {
+    public R<Void> updateSymptomRecord(@Validated @RequestBody AddSymptomRecordDTO addSymptomRecordDTO) {
         symptomRecordService.updateSymptomRecord(addSymptomRecordDTO);
-        return Result.success();
+        return R.ok();
     }
 
     /**
@@ -50,10 +50,10 @@ public class SymptomRecordController {
      * 功能：查询当前用户在指定日期的所有症状记录
      */
     @GetMapping("/date/{recordDate}")
-    public Result<List<SymptomRecordVO>> getSymptomRecordsByDate(
+    public R<List<SymptomRecordVO>> getSymptomRecordsByDate(
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate recordDate) {
         List<SymptomRecordVO> symptomRecords = symptomRecordService.getSymptomRecordsByDate(recordDate);
-        return Result.success(symptomRecords);
+        return R.ok(symptomRecords);
     }
 
     /**
@@ -61,11 +61,11 @@ public class SymptomRecordController {
      * 功能：查询当前用户在指定日期范围内的所有症状记录
      */
     @GetMapping("/range")
-    public Result<List<SymptomRecordVO>> getSymptomRecordsByDateRange(
+    public R<List<SymptomRecordVO>> getSymptomRecordsByDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
         List<SymptomRecordVO> symptomRecords = symptomRecordService.getSymptomRecordsByDateRange(startDate, endDate);
-        return Result.success(symptomRecords);
+        return R.ok(symptomRecords);
     }
 
     /**
@@ -73,9 +73,9 @@ public class SymptomRecordController {
      * 功能：查询当前用户最近N天的症状记录
      */
     @GetMapping("/recent")
-    public Result<List<SymptomRecordVO>> getRecentSymptomRecords(@RequestParam(defaultValue = "7") Integer days) {
+    public R<List<SymptomRecordVO>> getRecentSymptomRecords(@RequestParam(defaultValue = "7") Integer days) {
         List<SymptomRecordVO> symptomRecords = symptomRecordService.getRecentSymptomRecords(days);
-        return Result.success(symptomRecords);
+        return R.ok(symptomRecords);
     }
 
     /**
@@ -83,9 +83,9 @@ public class SymptomRecordController {
      * 功能：根据ID获取症状记录详情
      */
     @GetMapping("/{symptomRecordId}")
-    public Result<SymptomRecordVO> getSymptomRecordById(@PathVariable Long symptomRecordId) {
+    public R<SymptomRecordVO> getSymptomRecordById(@PathVariable Long symptomRecordId) {
         SymptomRecordVO symptomRecord = symptomRecordService.getSymptomRecordById(symptomRecordId);
-        return Result.success(symptomRecord);
+        return R.ok(symptomRecord);
     }
 
     /**
@@ -93,8 +93,8 @@ public class SymptomRecordController {
      * 功能：删除指定的症状记录
      */
     @DeleteMapping("/{symptomRecordId}")
-    public Result<Void> deleteSymptomRecord(@PathVariable Long symptomRecordId) {
+    public R<Void> deleteSymptomRecord(@PathVariable Long symptomRecordId) {
         symptomRecordService.deleteSymptomRecord(symptomRecordId);
-        return Result.success();
+        return R.ok();
     }
 }

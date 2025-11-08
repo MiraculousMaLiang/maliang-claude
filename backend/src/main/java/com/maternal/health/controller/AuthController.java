@@ -1,6 +1,6 @@
 package com.maternal.health.controller;
 
-import com.maternal.health.common.Result;
+import com.maternal.health.result.R;
 import com.maternal.health.dto.LoginDTO;
 import com.maternal.health.dto.RegisterDTO;
 import com.maternal.health.dto.WxLoginDTO;
@@ -29,9 +29,9 @@ public class AuthController {
      * 功能：用户使用手机号和密码进行登录
      */
     @PostMapping("/login")
-    public Result<LoginVO> login(@Validated @RequestBody LoginDTO loginDTO) {
+    public R<LoginVO> login(@Validated @RequestBody LoginDTO loginDTO) {
         LoginVO loginVO = authService.login(loginDTO);
-        return Result.success(loginVO);
+        return R.ok(loginVO);
     }
 
     /**
@@ -39,9 +39,9 @@ public class AuthController {
      * 功能：注册新用户账号
      */
     @PostMapping("/register")
-    public Result<LoginVO> register(@Validated @RequestBody RegisterDTO registerDTO) {
+    public R<LoginVO> register(@Validated @RequestBody RegisterDTO registerDTO) {
         LoginVO loginVO = authService.register(registerDTO);
-        return Result.success(loginVO);
+        return R.ok(loginVO);
     }
 
     /**
@@ -49,9 +49,9 @@ public class AuthController {
      * 功能：使用微信小程序code进行登录
      */
     @PostMapping("/wxLogin")
-    public Result<LoginVO> wxLogin(@Validated @RequestBody WxLoginDTO wxLoginDTO) {
+    public R<LoginVO> wxLogin(@Validated @RequestBody WxLoginDTO wxLoginDTO) {
         LoginVO loginVO = authService.wxLogin(wxLoginDTO);
-        return Result.success(loginVO);
+        return R.ok(loginVO);
     }
 
     /**
@@ -59,8 +59,8 @@ public class AuthController {
      * 功能：用户退出登录，清除登录状态
      */
     @PostMapping("/logout")
-    public Result<Void> logout() {
+    public R<Void> logout() {
         authService.logout();
-        return Result.success("退出登录成功");
+        return R.ok("退出登录成功");
     }
 }

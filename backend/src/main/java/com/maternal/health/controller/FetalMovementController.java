@@ -1,6 +1,6 @@
 package com.maternal.health.controller;
 
-import com.maternal.health.common.Result;
+import com.maternal.health.result.R;
 import com.maternal.health.dto.AddFetalMovementDTO;
 import com.maternal.health.service.FetalMovementService;
 import com.maternal.health.vo.FetalMovementVO;
@@ -30,9 +30,9 @@ public class FetalMovementController {
      * 功能：添加一条胎动记录
      */
     @PostMapping
-    public Result<Void> addFetalMovement(@Validated @RequestBody AddFetalMovementDTO addFetalMovementDTO) {
+    public R<Void> addFetalMovement(@Validated @RequestBody AddFetalMovementDTO addFetalMovementDTO) {
         fetalMovementService.addFetalMovement(addFetalMovementDTO);
-        return Result.success();
+        return R.ok();
     }
 
     /**
@@ -40,10 +40,10 @@ public class FetalMovementController {
      * 功能：查询当前用户在指定日期的所有胎动记录
      */
     @GetMapping("/date/{recordDate}")
-    public Result<List<FetalMovementVO>> getFetalMovementsByDate(
+    public R<List<FetalMovementVO>> getFetalMovementsByDate(
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate recordDate) {
         List<FetalMovementVO> fetalMovements = fetalMovementService.getFetalMovementsByDate(recordDate);
-        return Result.success(fetalMovements);
+        return R.ok(fetalMovements);
     }
 
     /**
@@ -51,11 +51,11 @@ public class FetalMovementController {
      * 功能：查询当前用户在指定日期范围内的所有胎动记录
      */
     @GetMapping("/range")
-    public Result<List<FetalMovementVO>> getFetalMovementsByDateRange(
+    public R<List<FetalMovementVO>> getFetalMovementsByDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
         List<FetalMovementVO> fetalMovements = fetalMovementService.getFetalMovementsByDateRange(startDate, endDate);
-        return Result.success(fetalMovements);
+        return R.ok(fetalMovements);
     }
 
     /**
@@ -63,9 +63,9 @@ public class FetalMovementController {
      * 功能：查询当前用户最近7天的胎动记录
      */
     @GetMapping("/recent")
-    public Result<List<FetalMovementVO>> getRecentFetalMovements() {
+    public R<List<FetalMovementVO>> getRecentFetalMovements() {
         List<FetalMovementVO> fetalMovements = fetalMovementService.getRecentFetalMovements();
-        return Result.success(fetalMovements);
+        return R.ok(fetalMovements);
     }
 
     /**
@@ -73,9 +73,9 @@ public class FetalMovementController {
      * 功能：删除指定的胎动记录
      */
     @DeleteMapping("/{fetalMovementId}")
-    public Result<Void> deleteFetalMovement(@PathVariable Long fetalMovementId) {
+    public R<Void> deleteFetalMovement(@PathVariable Long fetalMovementId) {
         fetalMovementService.deleteFetalMovement(fetalMovementId);
-        return Result.success();
+        return R.ok();
     }
 
     /**
@@ -83,9 +83,9 @@ public class FetalMovementController {
      * 功能：统计指定日期的胎动次数和总时长
      */
     @GetMapping("/statistics/{recordDate}")
-    public Result<FetalMovementVO> getFetalMovementStatistics(
+    public R<FetalMovementVO> getFetalMovementStatistics(
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate recordDate) {
         FetalMovementVO statistics = fetalMovementService.getFetalMovementStatistics(recordDate);
-        return Result.success(statistics);
+        return R.ok(statistics);
     }
 }

@@ -26,10 +26,10 @@ function request(options) {
         // 请求成功
         if (res.statusCode === 200) {
           const data = res.data;
-          // 判断业务是否成功
-          if (data.code === 200) {
+          // 判断业务是否成功（使用==以兼容String和Integer类型）
+          if (data.code == 200) {
             resolve(data.data);
-          } else if (data.code === 401) {
+          } else if (data.code == 401) {
             // token失效，跳转到登录页
             wx.showToast({
               title: '登录已过期，请重新登录',

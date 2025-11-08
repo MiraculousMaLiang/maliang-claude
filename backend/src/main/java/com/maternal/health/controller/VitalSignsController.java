@@ -1,6 +1,6 @@
 package com.maternal.health.controller;
 
-import com.maternal.health.common.Result;
+import com.maternal.health.result.R;
 import com.maternal.health.dto.AddVitalSignsDTO;
 import com.maternal.health.service.VitalSignsService;
 import com.maternal.health.vo.VitalSignsVO;
@@ -30,9 +30,9 @@ public class VitalSignsController {
      * 功能：添加一条体征监测记录
      */
     @PostMapping
-    public Result<Void> addVitalSigns(@Validated @RequestBody AddVitalSignsDTO addVitalSignsDTO) {
+    public R<Void> addVitalSigns(@Validated @RequestBody AddVitalSignsDTO addVitalSignsDTO) {
         vitalSignsService.addVitalSigns(addVitalSignsDTO);
-        return Result.success();
+        return R.ok();
     }
 
     /**
@@ -40,9 +40,9 @@ public class VitalSignsController {
      * 功能：更新已有的体征监测记录
      */
     @PutMapping
-    public Result<Void> updateVitalSigns(@Validated @RequestBody AddVitalSignsDTO addVitalSignsDTO) {
+    public R<Void> updateVitalSigns(@Validated @RequestBody AddVitalSignsDTO addVitalSignsDTO) {
         vitalSignsService.updateVitalSigns(addVitalSignsDTO);
-        return Result.success();
+        return R.ok();
     }
 
     /**
@@ -50,10 +50,10 @@ public class VitalSignsController {
      * 功能：查询指定日期的体征监测记录
      */
     @GetMapping("/date/{recordDate}")
-    public Result<VitalSignsVO> getVitalSignsByDate(
+    public R<VitalSignsVO> getVitalSignsByDate(
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate recordDate) {
         VitalSignsVO vitalSigns = vitalSignsService.getVitalSignsByDate(recordDate);
-        return Result.success(vitalSigns);
+        return R.ok(vitalSigns);
     }
 
     /**
@@ -61,9 +61,9 @@ public class VitalSignsController {
      * 功能：查询当前用户最近的一条体征记录
      */
     @GetMapping("/latest")
-    public Result<VitalSignsVO> getLatestVitalSigns() {
+    public R<VitalSignsVO> getLatestVitalSigns() {
         VitalSignsVO vitalSigns = vitalSignsService.getLatestVitalSigns();
-        return Result.success(vitalSigns);
+        return R.ok(vitalSigns);
     }
 
     /**
@@ -71,11 +71,11 @@ public class VitalSignsController {
      * 功能：查询当前用户在指定日期范围内的所有体征记录
      */
     @GetMapping("/range")
-    public Result<List<VitalSignsVO>> getVitalSignsByDateRange(
+    public R<List<VitalSignsVO>> getVitalSignsByDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
         List<VitalSignsVO> vitalSignsList = vitalSignsService.getVitalSignsByDateRange(startDate, endDate);
-        return Result.success(vitalSignsList);
+        return R.ok(vitalSignsList);
     }
 
     /**
@@ -83,9 +83,9 @@ public class VitalSignsController {
      * 功能：查询当前用户最近N天的体征记录
      */
     @GetMapping("/recent")
-    public Result<List<VitalSignsVO>> getRecentVitalSigns(@RequestParam(defaultValue = "7") Integer days) {
+    public R<List<VitalSignsVO>> getRecentVitalSigns(@RequestParam(defaultValue = "7") Integer days) {
         List<VitalSignsVO> vitalSignsList = vitalSignsService.getRecentVitalSigns(days);
-        return Result.success(vitalSignsList);
+        return R.ok(vitalSignsList);
     }
 
     /**
@@ -93,8 +93,8 @@ public class VitalSignsController {
      * 功能：删除指定的体征监测记录
      */
     @DeleteMapping("/{vitalSignsId}")
-    public Result<Void> deleteVitalSigns(@PathVariable Long vitalSignsId) {
+    public R<Void> deleteVitalSigns(@PathVariable Long vitalSignsId) {
         vitalSignsService.deleteVitalSigns(vitalSignsId);
-        return Result.success();
+        return R.ok();
     }
 }
