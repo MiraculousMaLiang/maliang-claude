@@ -92,3 +92,13 @@ logging:
     com.maternal.health.mapper: debug
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"
+
+# 微信小程序配置
+wechat:
+  miniapp:
+    # 小程序AppID（请替换为实际的AppID）
+    appid: your-appid-here
+    # 小程序AppSecret（请替换为实际的AppSecret）
+    secret: your-secret-here
+    # 微信API地址
+    api-url: https://api.weixin.qq.com

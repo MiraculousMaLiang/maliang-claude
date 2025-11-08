@@ -12,6 +12,7 @@ import com.maternal.health.mapper.SysUserMapper;
 import com.maternal.health.service.AuthService;
 import com.maternal.health.utils.BeanCopyUtil;
 import com.maternal.health.utils.PasswordUtil;
+import com.maternal.health.utils.WechatUtil;
 import com.maternal.health.vo.LoginVO;
 import com.maternal.health.vo.UserInfoVO;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private WechatUtil wechatUtil;
 
     /**
      * 手机号密码登录
@@ -115,13 +119,15 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public LoginVO wxLogin(WxLoginDTO wxLoginDTO) {
-        // TODO: 调用微信接口获取openid和unionid
-        // 这里暂时使用code作为openid进行模拟
-        String openid = wxLoginDTO.getCode();
+        // 调用微信接口获取openid和session_key
+        WechatUtil.WxSessionInfo sessionInfo = wechatUtil.code2Session(wxLoginDTO.getCode());
 
-        if (StrUtil.isBlank(openid)) {
-            throw new BusinessException("微信登录失败，code无效");
+        if (sessionInfo == null || StrUtil.isBlank(sessionInfo.getOpenid())) {
+            throw new BusinessException("微信登录失败，请重试");
         }
+
+        String openid = sessionInfo.getOpenid();
+        String unionid = sessionInfo.getUnionid();
 
         // 根据openid查询用户
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
@@ -132,12 +138,32 @@ public class AuthServiceImpl implements AuthService {
         if (user == null) {
             user = new SysUser();
             user.setOpenid(openid);
+            user.setUnionid(unionid);
             user.setNickname(StrUtil.isNotBlank(wxLoginDTO.getNickname()) ? wxLoginDTO.getNickname() : "用户" + System.currentTimeMillis());
             user.setAvatar(wxLoginDTO.getAvatar());
-            user.setGender(2);
+            user.setGender(wxLoginDTO.getGender() != null ? wxLoginDTO.getGender() : 2);
             user.setStatus(1);
             sysUserMapper.insert(user);
             log.info("微信用户自动注册：userId={}, openid={}", user.getId(), openid);
+        } else {
+            // 如果用户已存在，更新unionid（如果有）
+            if (StrUtil.isNotBlank(unionid) && !unionid.equals(user.getUnionid())) {
+                user.setUnionid(unionid);
+                sysUserMapper.updateById(user);
+            }
+            // 如果提供了昵称和头像，也更新
+            boolean needUpdate = false;
+            if (StrUtil.isNotBlank(wxLoginDTO.getNickname()) && !wxLoginDTO.getNickname().equals(user.getNickname())) {
+                user.setNickname(wxLoginDTO.getNickname());
+                needUpdate = true;
+            }
+            if (StrUtil.isNotBlank(wxLoginDTO.getAvatar()) && !wxLoginDTO.getAvatar().equals(user.getAvatar())) {
+                user.setAvatar(wxLoginDTO.getAvatar());
+                needUpdate = true;
+            }
+            if (needUpdate) {
+                sysUserMapper.updateById(user);
+            }
         }
 
         // 验证用户状态

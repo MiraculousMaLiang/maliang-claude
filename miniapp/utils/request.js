@@ -118,5 +118,6 @@ module.exports = {
   get,
   post,
   put,
+  delete: del,  // 导出delete作为别名
   del
 }
