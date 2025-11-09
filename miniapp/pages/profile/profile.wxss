@@ -1,1 +1,33 @@
 /* 个人信息页面样式 */
+
+.container {
+  min-height: 100vh;
+  background-color: #f7f8fa;
+  padding: 20rpx;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.p-30 {
+  padding: 30rpx;
+  background: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.text-bold {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.mt-20 {
+  margin-top: 20rpx;
+}
+
+.text-secondary {
+  font-size: 28rpx;
+  color: #999;
+}

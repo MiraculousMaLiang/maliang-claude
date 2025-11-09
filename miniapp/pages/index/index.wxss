@@ -2,32 +2,38 @@
 
 .container {
   padding: 20rpx;
-  background-color: #F8F8F8;
+  background-color: #f7f8fa;
+  min-height: 100vh;
 }
 
 /* 顶部欢迎信息 */
 .header {
-  background: linear-gradient(135deg, #FF9999 0%, #FFCCCC 100%);
-  border-radius: 20rpx;
+  background: #ffffff;
+  border-radius: 16rpx;
   padding: 40rpx 30rpx;
   margin-bottom: 20rpx;
-  color: #fff;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.06);
 }
 
 .welcome-text {
   font-size: 36rpx;
   font-weight: bold;
   margin-bottom: 10rpx;
+  color: #333;
 }
 
 .tips-text {
   font-size: 28rpx;
-  opacity: 0.9;
+  color: #666;
 }
 
 /* 孕期信息卡片 */
 .pregnancy-card {
   margin-bottom: 20rpx;
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.06);
 }
 
 .card-title {
@@ -62,6 +68,10 @@
 /* 功能菜单 */
 .menu-section {
   margin-bottom: 20rpx;
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.06);
 }
 
 .menu-section van-grid {

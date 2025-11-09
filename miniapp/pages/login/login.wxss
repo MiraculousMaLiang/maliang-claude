@@ -2,7 +2,7 @@
 
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #FFE5E5 0%, #FFF5F5 100%);
+  background: #f7f8fa;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,12 +12,16 @@
 .login-box {
   width: 100%;
   max-width: 600rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 60rpx 40rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.08);
 }
 
 /* Logo区域 */
 .logo-section {
   text-align: center;
-  margin-bottom: 80rpx;
+  margin-bottom: 60rpx;
 }
 
 .logo {
@@ -60,7 +64,7 @@
 .link-text {
   text-align: center;
   font-size: 28rpx;
-  color: #FF9999;
+  color: #FF6B9D;
   margin-top: 20rpx;
 }
 
@@ -70,8 +74,9 @@
   font-size: 24rpx;
   color: #999;
   line-height: 1.6;
+  margin-top: 40rpx;
 }
 
 .agreement .link {
-  color: #FF9999;
+  color: #FF6B9D;
 }
