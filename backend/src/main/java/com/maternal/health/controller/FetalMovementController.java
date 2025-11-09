@@ -32,7 +32,7 @@ public class FetalMovementController {
     @PostMapping
     public R<Void> addFetalMovement(@Validated @RequestBody AddFetalMovementDTO addFetalMovementDTO) {
         fetalMovementService.addFetalMovement(addFetalMovementDTO);
-        return R.ok();
+        return R.ok("");
     }
 
     /**
@@ -75,7 +75,7 @@ public class FetalMovementController {
     @DeleteMapping("/{fetalMovementId}")
     public R<Void> deleteFetalMovement(@PathVariable Long fetalMovementId) {
         fetalMovementService.deleteFetalMovement(fetalMovementId);
-        return R.ok();
+        return R.ok("");
     }
 
     /**

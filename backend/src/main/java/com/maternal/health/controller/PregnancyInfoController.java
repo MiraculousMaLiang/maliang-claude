@@ -38,7 +38,7 @@ public class PregnancyInfoController {
     @PostMapping("/info")
     public R<Void> saveOrUpdatePregnancyInfo(@Validated @RequestBody AddPregnancyInfoDTO addPregnancyInfoDTO) {
         pregnancyInfoService.saveOrUpdatePregnancyInfo(addPregnancyInfoDTO);
-        return R.ok();
+        return R.ok("");
     }
 
     /**
@@ -48,7 +48,7 @@ public class PregnancyInfoController {
     @PutMapping("/info/{pregnancyId}/calculate")
     public R<Void> updateCalculatedFields(@PathVariable Long pregnancyId) {
         pregnancyInfoService.updateCalculatedFields(pregnancyId);
-        return R.ok();
+        return R.ok("");
     }
 
     /**
@@ -58,6 +58,6 @@ public class PregnancyInfoController {
     @DeleteMapping("/info/{pregnancyId}")
     public R<Void> deletePregnancyInfo(@PathVariable Long pregnancyId) {
         pregnancyInfoService.deletePregnancyInfo(pregnancyId);
-        return R.ok();
+        return R.ok("");
     }
 }

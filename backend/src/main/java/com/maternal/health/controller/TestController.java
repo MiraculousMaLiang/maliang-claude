@@ -34,7 +34,7 @@ public class TestController {
      * 功能：测试统一返回格式
      */
     @GetMapping("/hello")
-    public R<String> hello() {
+    public R<Void> hello() {
         return R.ok("Hello, Maternal Health System!");
     }
 }

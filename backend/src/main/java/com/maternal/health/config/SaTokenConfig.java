@@ -24,9 +24,7 @@ public class SaTokenConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**") // 拦截所有路径
                 .excludePathPatterns(
                         // 排除不需要登录的接口
-                        "/api/auth/login",           // 登录接口
-                        "/api/auth/register",        // 注册接口
-                        "/api/auth/wxLogin",         // 微信登录接口
+                        "/auth/**",           // 登录接口  // 注册接口  // 微信登录接口
                         "/api/test/**",              // 测试接口
                         "/error",                    // 错误页面
                         "/favicon.ico"               // 网站图标

@@ -32,7 +32,7 @@ public class VitalSignsController {
     @PostMapping
     public R<Void> addVitalSigns(@Validated @RequestBody AddVitalSignsDTO addVitalSignsDTO) {
         vitalSignsService.addVitalSigns(addVitalSignsDTO);
-        return R.ok();
+        return R.ok("");
     }
 
     /**
@@ -42,7 +42,7 @@ public class VitalSignsController {
     @PutMapping
     public R<Void> updateVitalSigns(@Validated @RequestBody AddVitalSignsDTO addVitalSignsDTO) {
         vitalSignsService.updateVitalSigns(addVitalSignsDTO);
-        return R.ok();
+        return R.ok("");
     }
 
     /**
@@ -95,6 +95,6 @@ public class VitalSignsController {
     @DeleteMapping("/{vitalSignsId}")
     public R<Void> deleteVitalSigns(@PathVariable Long vitalSignsId) {
         vitalSignsService.deleteVitalSigns(vitalSignsId);
-        return R.ok();
+        return R.ok("");
     }
 }

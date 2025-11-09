@@ -32,7 +32,7 @@ public class SymptomRecordController {
     @PostMapping
     public R<Void> addSymptomRecord(@Validated @RequestBody AddSymptomRecordDTO addSymptomRecordDTO) {
         symptomRecordService.addSymptomRecord(addSymptomRecordDTO);
-        return R.ok();
+        return R.ok("");
     }
 
     /**
@@ -42,7 +42,7 @@ public class SymptomRecordController {
     @PutMapping
     public R<Void> updateSymptomRecord(@Validated @RequestBody AddSymptomRecordDTO addSymptomRecordDTO) {
         symptomRecordService.updateSymptomRecord(addSymptomRecordDTO);
-        return R.ok();
+        return R.ok("");
     }
 
     /**
@@ -95,6 +95,6 @@ public class SymptomRecordController {
     @DeleteMapping("/{symptomRecordId}")
     public R<Void> deleteSymptomRecord(@PathVariable Long symptomRecordId) {
         symptomRecordService.deleteSymptomRecord(symptomRecordId);
-        return R.ok();
+        return R.ok("");
     }
 }
